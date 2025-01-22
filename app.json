@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "simple",
-    "slug": "simple",
+    "slug": "shop-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -36,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "33cdc1e8-1a1d-49f8-aff3-ceb86cc298f7"
+      }
+    },
+    "owner": "moayadanjjar"
   }
 }
