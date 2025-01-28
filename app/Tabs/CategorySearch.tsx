@@ -82,7 +82,7 @@ const CategorySearch = () => {
                 <Dropdown
                
                     selectedValue={category}
-                    placeholder="Select an option..."
+                    placeholder="Select an option...."
                     options={CategoryElectronic.map(category => ({
                         label: category.name.trim().replace('\n', ''),
                         value: category.name.trim()
