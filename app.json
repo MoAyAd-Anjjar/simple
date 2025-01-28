@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "simple",
+    "name": "shop-app",
     "slug": "shop-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.moayadanjjar.shopapp"
     },
     "web": {
       "bundler": "metro",
@@ -45,6 +46,12 @@
         "projectId": "33cdc1e8-1a1d-49f8-aff3-ceb86cc298f7"
       }
     },
-    "owner": "moayadanjjar"
+    "owner": "moayadanjjar",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/33cdc1e8-1a1d-49f8-aff3-ceb86cc298f7"
+    }
   }
 }

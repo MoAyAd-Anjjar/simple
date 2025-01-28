@@ -13,10 +13,10 @@ export default function CartPage() {
   const [cartItems, setCartItems] = useState([
     { id: '1', name: 'Wireless Headphones', price: 120, image: require('../Images/WirelessHeadphones.png'), quantity: 1 },
     { id: '2', name: 'Smartwatch', price: 80, image: require('../Images/Iphone.png'), quantity: 1 },
-    { id: '3', name: 'Gaming Mouse', price: 40, image: require('../Images/Iphone.png'), quantity: 1 },
-    { id: '4', name: 'Gaming Mouse', price: 40, image: require('../Images/Iphone.png'), quantity: 1 },
-    { id: '5', name: 'Gaming Mouse', price: 40, image: require('../Images/Iphone.png'), quantity: 1 },
-    { id: '6', name: 'Gaming Mouse', price: 40, image: require('../Images/Iphone.png'), quantity: 1 },
+    { id: '3', name: 'Gaming Mouse', price: 40, image: require('../Images/iphone-14.png'), quantity: 1 },
+    { id: '4', name: 'Gaming Mouse', price: 40, image: require('../Images/smartwatch.png'), quantity: 1 },
+    { id: '5', name: 'Gaming Mouse', price: 40, image: require('../Images/pc-case.png'), quantity: 1 },
+    { id: '6', name: 'Gaming Mouse', price: 40, image: require('../Images/iphone-home.png'), quantity: 1 },
     { id: '7', name: 'Gaming Mouse', price: 40, image: require('../Images/Iphone.png'), quantity: 1 }
   ]);
 

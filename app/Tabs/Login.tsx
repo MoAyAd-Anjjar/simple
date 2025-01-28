@@ -2,44 +2,55 @@ import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert, Image } from "react-native";
 import styles from "../Styles/LoginStyles"; // Import the styles
 import { useRouter } from "expo-router"; // Import for navigation
+import useUser from "../Hook/userHook";
+
+export interface Iuser{
+  username: string,
+  email: string,
+  password: string,
+  user_id?:number
+}
 
 export default function Login() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const {getUsers}=useUser()
   const [password, setPassword] = useState("");
   const router = useRouter(); // Hook for navigating
 
   // Predefined array of users
-  const users = [
-    { name: "John", email: "john@example.com", password: "12345" },
-    { name: "Jane", email: "jane@example.com", password: "67890" },
-    { name: "Doe", email: "doe@example.com", password: "password" },
-    { name: "1", email: "2", password: "3" },
-  ];
 
-  const showData = () => {
-    // Check if user exists in the array
-    const userFound = users.find(
-      (user) =>
-        user.name === name &&
-        user.email === email &&
-        user.password === password
-    );
+  
 
-    if (userFound) {
-      // Navigate to the home page
-      router.push({
-        pathname: "/Tabs/Home", // Ensure this route is correctly set up
-        params: { userName: userFound.name },
-      });
-      setPassword("");
-      setName("");
-      setEmail("");
-    } else {
-      // Show an error alert
-      Alert.alert("Invalid Input", "User not found. Please check your credentials.");
+
+  const showData = async () => {
+    if (!name || !email || !password) {
+      Alert.alert("Validation Error", "Please fill in all the fields.");
+      return;
+    }
+  
+    try {
+      const getuser: Iuser = await getUsers(name, email, password);
+   
+      
+      if (getuser.username) {
+        router.push({
+          pathname: "/Tabs/Home", // Ensure this route is correctly set up
+          params: { userName: getuser.username },
+        });
+        setPassword("");
+        setName("");
+        setEmail("");
+      } else {
+        // Show an error alert
+        Alert.alert("Invalid Input", "User not found. Please check your credentials.");
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "There was an issue fetching the users. Please try again.");
     }
   };
+  
 
   return (
     <View style={styles.container}>

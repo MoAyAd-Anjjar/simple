@@ -1,125 +1,42 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Animated, View, Text, StyleSheet, Image, TouchableWithoutFeedback, TextInput, TouchableOpacity, Alert, Pressable } from "react-native";
-import { router, useLocalSearchParams, useRouter } from "expo-router"; // Correct hook
-import styles from "../Styles/HomeStyle"
-import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { FlatList, View, StyleSheet } from "react-native";
+import  HomeHeader  from "./HomeHeader";
+import  HomeScroll  from "./HomeScroll";
+import HomeProduct from "./HomeProduct";
+import HomeCategory  from "./HomeCategory";
+import styles from "../Styles/HomeStyle";
 
-
-
-export default function Home() {
-  const { userName } = useLocalSearchParams(); // Extract parameters passed via router.push
-  const slideAnimation = useRef(new Animated.Value(-100)).current; // Start position above the screen
-  const [showModal, setShowModal] = useState(true); // Control modal visibility
-  const router = useRouter(); // Hook for navigating
-  useEffect(() => {
-    if (showModal) {
-      // Animate the modal to slide down
-      Animated.timing(slideAnimation, {
-        toValue: 0, // Target position at the top
-        duration: 800,
-        useNativeDriver: true,
-      }).start();
-    }
-  }, [showModal]);
-
-  const closeModal = () => {
-    // Animate the modal to slide back up
-    Animated.timing(slideAnimation, {
-      toValue: -100, // Slide back up
-      duration: 500,
-      useNativeDriver: true,
-    }).start(() => setShowModal(false)); // Hide modal after animation
-  };
-
-  const handlePressCart=() => {
-    router.push("/Tabs/Cart") // Navigate to the Cart screen
-  }
-
-  const handlePresslogout = () => {
-    Alert.alert(
-      "Logout",
-     "Are you sure you want to logout?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: () => {
-            // Navigate after the user confirms logout
-            router.push({
-              pathname: "/"
-            }) // Replace 'Home' with your desired screen
-          },
-        }
-
-      ]
-    );
-  };
-
-
-  return (
-    <View style={styles.container}>
-      {/* Modal at the top */}
-      {showModal && (
-        <Animated.View
-          style={[
-            styles.modal,
-            { transform: [{ translateY: slideAnimation }] }, // Apply slide animation
-          ]}
-        >
-          <TouchableWithoutFeedback onPress={closeModal}>
-            <View>
-              <Text style={styles.welcomeText}>
-                Welcome, {userName || "Guest"}!
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </Animated.View>
-      )}
-
-      {/* Main Content */}
-      <View style={styles.mainContent}>
-        <View style={styles.HeaderContainer}>
-          <View style={styles.LeftHeaderInfo}>
-            <TouchableOpacity onPress={handlePresslogout}>
-              <Image
-                source={require("../Images/logout.png")}
-                style={styles.IconHeader}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handlePressCart}>
-            <Image 
-              source={require("../Images/shopping-cart.png")} // Ensure the path is correct
-              style={styles.IconHeader}
-            />
-            </TouchableOpacity>
-        
-          </View>
-          <TextInput style={styles.InputTextHome} placeholder="Search" accessibilityRole="search"></TextInput>
-          <View style={styles.HeaderInfo}>
-            <Text >{userName}</Text>
-            <Image
-              source={require("../Images/user.png")} // Ensure the path is correct
-              style={styles.IconHeader}
-            />
-          </View>
-        </View>
-      </View>
-      <View style={styles.HomeImageContainer}>
-      <Image
-        source={require("../Images/pc-case.png")} // Ensure the path is correct
-        style={styles.HomeImage}
-      />
-      <TouchableOpacity onPress={closeModal} style={styles.HomeBuyButtonContainer}>
-        <Text style={styles.HomeBuyButton}>Buy it Now</Text>
-      </TouchableOpacity>
-    </View>
-
-    </View>
-  );
+export interface IHomeScrollData {
+  id: string;
+  image: any;
+  title: string;
 }
 
+export default function Home() {
+  const HomeScrollData: IHomeScrollData[] = [
+    { id: "1", image: require("../Images/pc-case.png"), title: "Buy it Now" },
+    { id: "2", image: require("../Images/iphone-home.png"), title: "Buy it Now" },
+    { id: "3", image: require("../Images/Iphone.png"), title: "Buy it Now" },
+    { id: "4", image: require("../Images/smartwatch.png"), title: "Buy it Now" },
+    { id: "5", image: require("../Images/headphone.png"), title: "Buy it Now" },
+  ];
+
+  return (
+    <FlatList
+      showsVerticalScrollIndicator={false}
+      style={styles.container}
+      data={[]}
+      keyExtractor={(item, index) => index.toString()} // Since there's no `data`, use a dummy keyExtractor
+      ListHeaderComponent={
+        <>
+          <HomeHeader />
+          <HomeScroll data={HomeScrollData} />
+          <HomeCategory />
+        </>
+      }
+      renderItem={null} // No items to render, so we pass `null`
+      ListFooterComponent={<HomeProduct />}
+    />
+  );
+}
 
